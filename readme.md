@@ -1,5 +1,15 @@
 ![](https://javascript30.com/images/JS3-social-share.png)
 
+--lazy 4 looking a job do somthing fun!
+
+
+####01 finished ***
+####02 finished ***
+####03 finished 2017-09-22
+* by the way css variables is cool not konw this before
+
+
+
 # JavaScript30
 
 Starter Files + Completed solutions for the JavaScript 30 Day Challenge.

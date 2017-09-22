@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
   <meta charset="UTF-8">
   <title>JS + CSS Clock</title>
@@ -62,13 +62,55 @@
       background:black;
       position: absolute;
       top:50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
+      transition-timing-function: cubic-bezier(0.1, 2.6, 0.71, 1.07);
+      transition: all .05s;
+    }
+    .second-hand{
+      transform-origin: 100%;
+    }
+    .min-hand{
+      height: 8px;
+      transform-origin: 100%;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    .hour-hand{
+      height: 10px;
+      border-top-left-radius: 50px;
+      border-bottom-left-radius: 50px;
     }
 
   </style>
 
   <script>
+    var doc = document;
 
+    function setDate() {
+      const secondHand = doc.querySelector('.second-hand');
+      const minsHand = doc.querySelector('.min-hand');
+      const hoursHand = doc.querySelector('.hour-hand');
 
+      const now = new Date;
+      const seconds = now.getSeconds();
+
+      const secondsDegrees =((seconds / 60) * 360)+ 90;
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+      const mins = now.getMinutes();
+      const minsDegress = (mins /60 ) * 360 +90;
+      // console.log(minsDegress)
+      minsHand.style.transform = `rotate(${minsDegress}deg)`;
+
+      // const hours = 5;
+      const hours = now.getHours();
+      const hoursDegress = (hours /12 ) * 360 +90;
+      console.log(hoursDegress);
+      hoursHand.style.transform = `rotate(${hoursDegress}deg)`;
+    }
+
+    setInterval(setDate,1000);
   </script>
 </body>
 </html>

@@ -18,13 +18,27 @@
     <input id="base" type="color" name="base" value="#ffc600">
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  <img src="//source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
 
     /*
       misc styles, nothing to do with CSS variables
     */
+    /* 
+    css var  cool
+    */
+    :root{
+      --space: 10px;
+      --blur: 10px;
+      --base: #fff;
+    }
+
+    img{
+      padding: var(--space);
+      background-color: var(--base);
+      filter: blur(var(--blur));
+    }
 
     body {
       text-align: center;
@@ -45,6 +59,19 @@
   </style>
 
   <script>
+    const doc = document;
+    const inputs = doc.querySelectorAll('input');
+    // console.log(inputs);
+    function handleChange() {
+      // console.log(this.value);
+      const suffix = this.dataset.sizing || '';
+
+      doc.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleChange));
+    inputs.forEach(input => input.addEventListener('mousemove',handleChange));
+
   </script>
 
 </body>
