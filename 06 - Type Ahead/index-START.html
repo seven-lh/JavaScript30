@@ -14,9 +14,54 @@
       <li>or a state</li>
     </ul>
   </form>
-<script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  <script>
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
-</script>
+  //定义空数组 然后用 fetch方法 Ajax请求json
+  const cities = [];
+
+  const data = fetch(endpoint).then(blob => blob.json())
+                  .then(data => cities.push(...data));
+  console.log(cities);
+
+  // 匹配方法规则
+  function matchCity (wordToMatch, cities) {
+    return cities.filter(place => {
+      const reg = new RegExp(wordToMatch, 'gi');
+      return place.city.match(reg) || place.state.match(reg);
+
+    });
+  }
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+  // 使用上面的方法筛选结果 塞入HTML 
+  function displayMatch() {
+    const matchArray = matchCity(this.value, cities);
+
+    // console.log(matchArray);
+    const html = matchArray.map(place => {
+
+      const reg = new RegExp(this.value, 'gi');
+
+      const city = place.city.replace(reg, `<span class="hl">${this.value}</span>`);
+      const state = place.city.replace(reg, `<span class="hl">${this.value}</span>`);
+
+      return `
+        <li>
+          <span>${city},${state}</span> <span>${numberWithCommas(place.population)}</span> 
+        </li>
+        `
+    }).join('');
+
+    searchSugges.innerHTML = html;
+  }
+
+  const searchInput = document.querySelector('.search');
+  const searchSugges = document.querySelector('.suggestions');
+
+  searchInput.addEventListener('change', displayMatch);
+  searchInput.addEventListener('keyup', displayMatch);
+  </script>
   </body>
 </html>
